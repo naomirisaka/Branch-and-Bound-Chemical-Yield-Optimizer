@@ -392,7 +392,7 @@ def main():
     
     save_choice = input("\nDo you want to save the solution to a file? (y/n): ").strip().lower()
     while save_choice not in ['y', 'n', 'yes', 'no']:
-        print("Invalid choice. Please enter 'y' or 'n'.")
+        print("Invalid choice. Please enter 'y' or 'n'.") 
         save_choice = input("\nDo you want to save the solution to a file? (y/n): ").strip().lower()
 
     if save_choice in ['y', 'yes']:

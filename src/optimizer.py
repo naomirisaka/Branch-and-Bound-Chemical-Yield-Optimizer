@@ -8,7 +8,7 @@ def can_apply(reaction: Reaction, available_moles: Dict[str, float]) -> bool:
 
 def calculate_bound(node: Node, reactions: List[Reaction], max_time: float, target_product: str) -> float:
     if node.total_time > max_time:
-        return node.total_yield
+        return node.total_yield 
     
     total_yield = node.total_yield
     time = node.total_time

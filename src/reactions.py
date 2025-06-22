@@ -153,7 +153,7 @@ def calculate_molecular_weight(formula: str) -> float:
                     except ValueError:
                         print("Please enter a valid number!")
         
-        MOLAR_MASS[formula] = total_weight
+        MOLAR_MASS[formula] = total_weight 
         return total_weight
         
     except Exception as e:
