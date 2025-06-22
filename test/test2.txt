@@ -1,0 +1,37 @@
+REACTIONS:
+2 NaCl + H2SO4 -> Na2SO4 + 2 HCl | 8.0
+NaCl + AgNO3 -> AgCl + NaNO3 | 7.5
+Na2SO4 + BaCl2 -> BaSO4 + 2 NaCl | 8.2
+CaCl2 + Na2CO3 -> CaCO3 + 2 NaCl | 7.8
+2 NaCl + Ca(OH)2 -> CaCl2 + 2 NaOH | 8.5
+NaOH + HCl -> NaCl + H2O | 7.2
+2 NaOH + H2SO4 -> Na2SO4 + 2 H2O | 8.3
+3 NaOH + AlCl3 -> Al(OH)3 + 3 NaCl | 7.9
+2 NaCl + MgSO4 -> Na2SO4 + MgCl2 | 8.1
+MgCl2 + 2 NaOH -> Mg(OH)2 + 2 NaCl | 7.6
+Na2CO3 + 2 HCl -> 2 NaCl + H2O + CO2 | 7.4
+NaHCO3 + HCl -> NaCl + H2O + CO2 | 7.3
+2 NaHCO3 -> Na2CO3 + H2O + CO2 | 8.4
+Na2CO3 + CaCl2 -> CaCO3 + 2 NaCl | 7.7
+NaCl + KNO3 -> KCl + NaNO3 | 8.6
+2 NaCl + ZnSO4 -> Na2SO4 + ZnCl2 | 8.0
+
+COMPOUNDS:
+NaCl 100 g
+H2SO4 0.5 kg
+AgNO3 250 g
+BaCl2 300 g
+Na2CO3 400 g
+Ca(OH)2 350 g
+HCl 200 g
+AlCl3 250 g
+MgSO4 20 mol
+NaOH 150 g
+NaHCO3 450 g
+CaCl2 280 g
+KNO3 220 g
+ZnSO4 320 g
+
+PARAMETERS:
+MAX_TIME: 200.0
+TARGET: NaCl

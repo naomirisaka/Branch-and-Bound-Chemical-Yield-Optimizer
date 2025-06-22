@@ -1,6 +1,7 @@
 REACTIONS:
 2 H2 + O2 -> 2 H2O | 5
 C6H12O6 + 6 O2 -> 6 CO2 + 6 H2O | 10
+CuSO4 + 5 H2O -> CuSO4_5H2O | 3.5
 
 COMPOUNDS:
 H2 10 mol

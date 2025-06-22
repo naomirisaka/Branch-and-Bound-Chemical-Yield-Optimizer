@@ -1,0 +1,74 @@
+REACTIONS:
+2 H2 + O2 -> 2 H2O | 28
+CH4 + 2 O2 -> CO2 + 2 H2O | 29
+C2H4 + 3 O2 -> 2 CO2 + 2 H2O | 30
+C2H6 + 3.5 O2 -> 2 CO2 + 3 H2O | 31
+C3H8 + 5 O2 -> 3 CO2 + 4 H2O | 32
+C4H10 + 6.5 O2 -> 4 CO2 + 5 H2O | 33
+2 C2H2 + 5 O2 -> 4 CO2 + 2 H2O | 27
+C6H12O6 -> 2 C2H5OH + 2 CO2 | 35
+2 C2H5OH + O2 -> 2 CH3COOH + 2 H2O | 34
+CH3OH + 1.5 O2 -> CO2 + 2 H2O | 26
+C + O2 -> CO2 | 15
+2 CO + O2 -> 2 CO2 | 16
+CO + H2O -> CO2 + H2 | 25
+H2 + 0.5 O2 -> H2O | 14
+CaCO3 -> CaO + CO2 | 45
+CaO + H2O -> Ca(OH)2 | 12
+Ca(OH)2 + CO2 -> CaCO3 + H2O | 18
+2 Al + 3 CuSO4 -> Al2(SO4)3 + 3 Cu | 40
+NaOH + HCl -> NaCl + H2O | 8
+Na2CO3 + 2 HCl -> 2 NaCl + H2O + CO2 | 10
+2 NaOH + H2SO4 -> Na2SO4 + 2 H2O | 12
+NH3 + HCl -> NH4Cl | 6
+NH4Cl + NaOH -> NH3 + NaCl + H2O | 9
+2 NH3 + H2SO4 -> (NH4)2SO4 | 15
+Mg + 2 HCl -> MgCl2 + H2 | 20
+MgO + H2O -> Mg(OH)2 | 8
+Mg(OH)2 + 2 HCl -> MgCl2 + 2 H2O | 11
+Fe + CuSO4 -> FeSO4 + Cu | 25
+Fe2O3 + 3 CO -> 2 Fe + 3 CO2 | 120
+4 Fe + 3 O2 -> 2 Fe2O3 | 60
+CuO + H2 -> Cu + H2O | 35
+ZnO + H2 -> Zn + H2O | 30
+2 H2O2 -> 2 H2O + O2 | 5
+H2O2 + H2 -> 2 H2O | 7
+
+COMPOUNDS:
+H2 80.0 mol
+O2 15.0 mol
+CH4 40.0 g
+C2H4 35.0 g
+C2H6 45.0 g
+C3H8 55.0 g
+C4H10 65.0 g
+C2H2 30.0 g
+C6H12O6 200.0 g
+C2H5OH 50.0 g
+CH3OH 40.0 g
+C 25.0 g
+CO 45.0 g
+CaCO3 150.0 g
+CaO 80.0 g
+Ca(OH)2 90.0 g
+Al 60.0 g
+CuSO4 200.0 g
+NaOH 60.0 g
+HCl 80.0 g
+Na2CO3 120.0 g
+H2SO4 100.0 g
+NH3 25.0 g
+NH4Cl 70.0 g
+Mg 35.0 g
+MgO 50.0 g
+Mg(OH)2 75.0 g
+Fe 85.0 g
+FeSO4 180.0 g
+Fe2O3 120.0 g
+CuO 95.0 g
+ZnO 110.0 g
+H2O2 85.0 g
+
+PARAMETERS:
+MAX_TIME: 400
+TARGET: H2O
