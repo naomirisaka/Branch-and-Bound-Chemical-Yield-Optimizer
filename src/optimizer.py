@@ -130,10 +130,10 @@ def branch_and_bound(reactions: List[Reaction], max_time: float,
                 else:
                     current_moles[product] = coeff * extent
 
+    final_yield = current_moles.get(target_product, 0)
     stats = {
         'nodes_explored': nodes_explored,
         'total_time': total_time,
-        'efficiency': max_yield / max(total_time, 0.1)
+        'efficiency': final_yield / max(total_time, 0.1)
     }
-
-    return max_yield, selected_reactions, stats
+    return final_yield, selected_reactions, stats
