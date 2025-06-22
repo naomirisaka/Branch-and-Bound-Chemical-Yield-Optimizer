@@ -103,6 +103,7 @@ def generate_input_example() -> str:
             f.write("REACTIONS:\n")
             f.write("2 H2 + O2 -> 2 H2O | 5\n")
             f.write("C6H12O6 + 6 O2 -> 6 CO2 + 6 H2O | 10\n")
+            f.write("CuSO4 + 5 H2O -> CuSO4_5H2O | 3.5\n")
             f.write("\nCOMPOUNDS:\n")
             f.write("H2 10 mol\n")
             f.write("O2 5 mol\n")
@@ -161,7 +162,7 @@ def input_reactions() -> List[Reaction]:
                 
                 if not reaction.reactants and not reaction.products:
                     print("Error: Could not parse reaction equation. Please check the format.")
-                    print("Make sure to use '->' to separate reactants and products")
+                    print("Make sure to use '->' to separate reactants and products\n")
                     continue
                 
                 if not reaction.reactants:
@@ -350,7 +351,7 @@ def main():
         reactions, compound_moles, max_time, target_product = load_from_file(filename)
         
         while not reactions:
-            print("Failed to load file or no valid reactions found.")
+            print("Failed to load file (file name or format invalid).")
             filename = input("\nEnter input filename (e.g., input.txt): ").strip()
             reactions, compound_moles, max_time, target_product = load_from_file(filename)
         

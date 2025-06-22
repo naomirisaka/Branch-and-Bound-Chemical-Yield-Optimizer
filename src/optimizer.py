@@ -45,7 +45,7 @@ def branch_and_bound(reactions: List[Reaction], max_time: float,
         max_extent = r.get_limiting_extent(initial_moles)
         potential_yield = r.calculate_yield(target_product, max_extent)
         actual_time = r.time * max_extent
-        return potential_yield / (actual_time + 0.1)
+        return potential_yield / actual_time if actual_time > 0 else 0
     
     reactions.sort(key=efficiency, reverse=True)
 
