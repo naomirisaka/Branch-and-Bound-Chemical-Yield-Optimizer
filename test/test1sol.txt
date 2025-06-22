@@ -1,0 +1,29 @@
+PROBLEM PARAMETERS:
+Target Product: H2O
+Time Limit: 300.00 minutes
+
+INITIAL CONDITIONS:
+Available Reactions: 10
+Initial Compounds:
+  H2: 50.000 mol
+  O2: 3.125 mol
+  CH4: 1.558 mol
+  C6H12O6: 0.999 mol
+  C: 0.999 mol
+  CO: 1.000 mol
+  CaCO3: 0.999 mol
+  Al: 2.001 mol
+  CuSO4: 1.000 mol
+  NaOH: 1.000 mol
+  HCl: 1.001 mol
+
+OPTIMIZATION RESULTS:
+Maximum Yield: 7.250 mol of H2O
+Total Time Used: 98.76 minutes
+Time Utilization: 32.9%
+Efficiency: 0.073 mol/min
+Nodes Explored: 3
+
+OPTIMAL REACTION SEQUENCE (2 reactions):
+1. NaOH + HCl -> NaCl + H2O (extent: 1.00, time: 5.0 min)
+2. 2 H2 + O2 -> 2 H2O (extent: 3.13, time: 93.8 min)
