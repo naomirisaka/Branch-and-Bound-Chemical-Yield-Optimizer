@@ -24,7 +24,6 @@ ATOMIC_MASS = {
 MOLAR_MASS = {}
 
 def parse_chemical_formula(formula: str) -> Dict[str, int]:
-    """Parse chemical formula and return element counts"""
     formula = expand_parentheses(formula)
     pattern = r'([A-Z][a-z]?)(\d*)'
     matches = re.findall(pattern, formula)
@@ -37,7 +36,6 @@ def parse_chemical_formula(formula: str) -> Dict[str, int]:
     return element_counts
 
 def expand_parentheses(formula: str) -> str:
-    """Enhanced parentheses expansion for nested structures"""
     while '(' in formula:
         depth = 0
         start = -1
@@ -160,7 +158,7 @@ class Node:
     def __lt__(self, other):
         return self.bound > other.bound
 
-def calculate_molecular_weight(formula: str) -> float:
+def calculate_molecular_mass(formula: str) -> float:
     if formula in MOLAR_MASS:
         return MOLAR_MASS[formula]
     
@@ -184,9 +182,9 @@ def calculate_molecular_weight(formula: str) -> float:
                         ATOMIC_MASS[element] = weight
                         total_weight += weight * element_counts[element]
                         break
-                    print("Atomic mass must be positive!")
+                    print("Atomic mass must be positive.")
                 except ValueError:
-                    print("Please enter a valid number!")
+                    print("Please enter a valid number.")
         
         MOLAR_MASS[formula] = total_weight 
         return total_weight
@@ -209,10 +207,10 @@ def convert_to_moles(amount: float, unit: str, compound: str) -> float:
     if unit in ['mol', 'moles']:
         return amount
     elif unit in ['g', 'gram', 'grams']:
-        mw = calculate_molecular_weight(compound)
+        mw = calculate_molecular_mass(compound)
         return amount / mw
     elif unit in ['kg', 'kilogram', 'kilograms']:
-        mw = calculate_molecular_weight(compound)
+        mw = calculate_molecular_mass(compound)
         return (amount * 1000) / mw
     else:
         raise ValueError(f"Invalid unit: {unit}. Supported units: mol, g, kg")
