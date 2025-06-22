@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Dict, List, Tuple
 from reactions import Reaction, convert_to_moles, MOLAR_MASS
 from optimizer import branch_and_bound
@@ -115,13 +114,11 @@ def generate_input_example() -> str:
         print(f"Error generating example input: {e}")
 
 def input_reactions() -> List[Reaction]:
-    print("\n" + "="*60)
+    print("\n" + "="*70 + "\n")
     print("ENTER CHEMICAL REACTIONS")
-    print("="*60)
     print("Enter your chemical reactions. Type 'done' when finished.")
     print("Format: reactants -> products (with coefficients)")
     print("Example: (CH2)3O5 + 2 H2O -> 7 C6H12O6")
-    print("Example: 2 H2 + O2 -> 2 H2O")
     
     reactions = []
     reaction_count = 0
@@ -130,76 +127,67 @@ def input_reactions() -> List[Reaction]:
         reaction_count += 1
         print(f"\nReaction {reaction_count}:")
         
-        equation = input("Enter reaction equation (or 'done' to finish): ").strip()
-        if equation.lower() == 'done':
-            break
-        
-        if not equation:
-            print("Please enter a valid reaction equation")
-            reaction_count -= 1
-            continue
-        
-        try:
-            while True:
+        while True:
+            equation = input("Enter reaction equation (or 'done' to finish): ").strip()
+            if equation.lower() == 'done':
+                if reactions:  
+                    return reactions
+                else:
+                    print("You must enter at least one reaction before finishing.")
+                    continue
+            
+            if not equation:
+                print("Please enter a valid reaction equation\n")
+                continue
+            
+            time = None
+            while time is None:
                 time_input = input("Reaction time in minutes: ").strip()
                 if not time_input:
                     print("Please enter a time value")
                     continue
                 try:
                     time = float(time_input)
-                    if time > 0:
-                        break
-                    print("Reaction time must be positive")
+                    if time <= 0:
+                        print("Reaction time must be positive")
+                        time = None
+                        continue
                 except ValueError:
                     print("Please enter a valid number")
+                    continue
             
-            reaction = Reaction(equation, time)
-            reactions.append(reaction)
-            
-            print(f"Added reaction: {reaction.equation}")
-            print(f"   Reactants: {dict(reaction.reactants)}")
-            print(f"   Products: {dict(reaction.products)}")
-            print(f"   Time: {reaction.time} minutes")
-            
-        except Exception as e:
-            print(f"Error adding reaction: {e}")
-            print("Please try again with correct format")
-            reaction_count -= 1
-    
-    while not reactions:
-        print("\nNo reactions entered. You must enter at least one reaction.")
-        equation = input("Enter reaction equation: ").strip()
-        if not equation:
-            continue
-        
-        while True:
-            time_input = input("Reaction time in minutes: ").strip()
-            if not time_input:
-                print("Please enter a time value")
-                continue
             try:
-                time = float(time_input)
-                if time > 0:
-                    break
-                print("Reaction time must be positive")
-            except ValueError:
-                print("Please enter a valid number")
-        
-        try:
-            reaction = Reaction(equation, time)
-            reactions.append(reaction)
-            print(f"Added reaction: {reaction.equation}")
-        except Exception as e:
-            print(f"Error adding reaction: {e}")
-            print("Please try again with correct format")
-    
-    print(f"\nTotal reactions added: {len(reactions)}")
-    return reactions
+                reaction = Reaction(equation, time)
+                
+                if not reaction.reactants and not reaction.products:
+                    print("Error: Could not parse reaction equation. Please check the format.")
+                    print("Make sure to use '->' to separate reactants and products")
+                    continue
+                
+                if not reaction.reactants:
+                    print("Error: No reactants found. Please check the equation format.")
+                    continue
+                
+                if not reaction.products:
+                    print("Error: No products found. Please check the equation format.")
+                    continue
+                
+                reactions.append(reaction)
+                
+                print(f"Added reaction: {reaction.equation}")
+                print(f"   Reactants: {dict(reaction.reactants)}")
+                print(f"   Products: {dict(reaction.products)}")
+                print(f"   Time: {reaction.time} minutes")
+                break  
+                
+            except Exception as e:
+                print(f"Error creating reaction: {e}")
+                print("Please try again with correct format")
+                continue
 
 def input_compounds(reactions: List[Reaction]) -> Dict[str, float]:
-    print("\n" + "="*60)
+    print("\n" + "="*70 + "\n")
     print("ENTER AVAILABLE COMPOUNDS")
-    print("="*60)
     print("Enter the compounds you have available with amounts.")
     print("Type 'done' when finished.")
     
@@ -216,59 +204,40 @@ def input_compounds(reactions: List[Reaction]) -> Dict[str, float]:
     while True:
         compound = input("\nEnter compound name (or 'done' to finish): ").strip()
         if compound.lower() == 'done':
-            break
+            if compound_moles:
+                break
+            else:
+                print("You must enter at least one compound before finishing.")
+                continue
         
         if not compound:
             print("Please enter a valid compound name")
             continue
         
-        while True:
+        amount = None
+        while amount is None:
             amount_input = input(f"Amount of {compound}: ").strip()
             if not amount_input:
                 print("Please enter an amount")
                 continue
             try:
                 amount = float(amount_input)
-                if amount >= 0:
-                    break
-                print("Amount must be non-negative")
+                if amount < 0:
+                    print("Amount must be non-negative")
+                    amount = None
+                    continue
             except ValueError:
                 print("Please enter a valid number")
-        
-        while True:
-            unit = input("Unit (g, kg, mol): ").strip()
-            if unit.lower() in ['g', 'gram', 'grams', 'kg', 'kilogram', 'kilograms', 'mol', 'moles']:
-                break
-            print("Please enter a valid unit: g, kg, or mol")
-        
-        moles = convert_to_moles(amount, unit, compound)
-        compound_moles[compound] = moles
-        print(f"Added {moles:.3f} mol of {compound}")
-    
-    while not compound_moles:
-        print("\nNo compounds entered. You must enter at least one compound.")
-        compound = input("Enter compound name: ").strip()
-        if not compound:
-            continue
-        
-        while True:
-            amount_input = input(f"Amount of {compound}: ").strip()
-            if not amount_input:
-                print("Please enter an amount")
                 continue
-            try:
-                amount = float(amount_input)
-                if amount >= 0:
-                    break
-                print("Amount must be non-negative")
-            except ValueError:
-                print("Please enter a valid number")
         
-        while True:
-            unit = input("Unit (g, kg, mol): ").strip()
-            if unit.lower() in ['g', 'gram', 'grams', 'kg', 'kilogram', 'kilograms', 'mol', 'moles']:
-                break
-            print("Please enter a valid unit: g, kg, or mol")
+        unit = None
+        while unit is None:
+            unit_input = input("Unit (g, kg, mol): ").strip().lower()
+            if unit_input in ['g', 'gram', 'grams', 'kg', 'kilogram', 'kilograms', 'mol', 'mole', 'moles']:
+                unit = unit_input
+            else:
+                print("Please enter a valid unit: g, kg, or mol")
+                continue
         
         try:
             moles = convert_to_moles(amount, unit, compound)
@@ -285,9 +254,8 @@ def input_compounds(reactions: List[Reaction]) -> Dict[str, float]:
     return compound_moles
 
 def input_constraints(reactions: List[Reaction]) -> Tuple[float, str]:
-    print("\n" + "="*60)
+    print("\n" + "="*70 + "\n")
     print("ENTER OPTIMIZATION PARAMETERS")
-    print("="*60)
     
     all_products = set()
     for reaction in reactions:
@@ -296,20 +264,29 @@ def input_constraints(reactions: List[Reaction]) -> Tuple[float, str]:
     if all_products:
         print(f"Available products from your reactions: {', '.join(sorted(all_products))}")
     
-    while True:
-        target = input("Enter target product to maximize: ").strip()
-        if target:
-            break
-        print("Please enter a target product!")
+    target = None
+    while target is None:
+        target_input = input("Enter target product to maximize: ").strip()
+        if target_input:
+            target = target_input
+        else:
+            print("Please enter a target product!")
     
-    while True:
+    max_time = None
+    while max_time is None:
         try:
-            max_time = float(input("Maximum time limit (minutes): "))
-            if max_time > 0:
-                break
-            print("Time must be positive!")
+            max_time_input = input("Maximum time limit (minutes): ").strip()
+            if not max_time_input:
+                print("Please enter a time limit")
+                continue
+            max_time = float(max_time_input)
+            if max_time <= 0:
+                print("Time must be positive!")
+                max_time = None
+                continue
         except ValueError:
             print("Please enter a valid number!")
+            continue
     
     print(f"\nTarget product: {target}")
     print(f"Time limit: {max_time} minutes")
@@ -373,7 +350,7 @@ def main():
         reactions, compound_moles, max_time, target_product = load_from_file(filename)
         
         while not reactions:
-            print("Failed to load file.")
+            print("Failed to load file or no valid reactions found.")
             filename = input("\nEnter input filename (e.g., input.txt): ").strip()
             reactions, compound_moles, max_time, target_product = load_from_file(filename)
         
@@ -405,7 +382,6 @@ def main():
 
         save_solution_to_file(output_filename, max_yield, selected_reactions, 
                              stats, max_time, target_product, initial_data)
-        print(f"Saved solution to {output_filename}")
 
 if __name__ == "__main__":
     main()
