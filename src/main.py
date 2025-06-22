@@ -81,10 +81,6 @@ def save_solution_to_file(filename: str, max_yield: float, selected_reactions: L
             f.write(f"Efficiency: {stats['efficiency']:.3f} mol/min\n")
             f.write(f"Nodes Explored: {stats['nodes_explored']}\n\n")
             
-            if target_product in MOLAR_MASS:
-                mass_yield = max_yield * MOLAR_MASS[target_product]
-                f.write(f"Yield in grams: {mass_yield:.2f} g\n\n")
-            
             f.write(f"OPTIMAL REACTION SEQUENCE ({len(selected_reactions)} reactions):\n")
             for i, reaction_info in enumerate(selected_reactions, 1):
                 f.write(f"{i}. {reaction_info}\n")
