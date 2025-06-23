@@ -1,0 +1,32 @@
+PROBLEM PARAMETERS:
+Target Product: H2O
+Time Limit: 80.00 minutes
+
+INITIAL CONDITIONS:
+Available Reactions: 15
+Initial Compounds:
+H2: 20.000 mol
+O2: 25.000 mol
+CH4: 5.000 mol
+C2H4: 3.000 mol
+CO: 8.000 mol
+C: 10.000 mol
+Cl2: 5.000 mol
+N2: 6.000 mol
+C2H6: 4.000 mol
+C2H2: 2.000 mol
+CuSO4: 7.000 mol
+
+OPTIMIZATION RESULTS:
+Maximum Yield: 28.000 mol of H2O
+Yield in grams: 504.42 g
+Total Time Used: 80.00 minutes
+Time Utilization: 100.0%
+Efficiency: 0.350 mol/min
+Processing Time: 0.39 ms
+Nodes Explored: 5
+
+OPTIMAL REACTION SEQUENCE (3 reactions):
+1. 2 H2 + O2 -> 2 H2O (extent: 10.00, time: 50.0 min)
+2. C2H4 + 3 O2 -> 2 CO2 + 2 H2O (extent: 3.00, time: 19.5 min)
+3. 2 C2H2 + 5 O2 -> 4 CO2 + 2 H2O (extent: 1.00, time: 10.5 min)

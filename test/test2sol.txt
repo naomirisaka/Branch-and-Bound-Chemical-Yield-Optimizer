@@ -1,0 +1,37 @@
+PROBLEM PARAMETERS:
+Target Product: NaCl
+Time Limit: 200.00 minutes
+
+INITIAL CONDITIONS:
+Available Reactions: 16
+Initial Compounds:
+NaCl: 1.711 mol
+H2SO4: 5.098 mol
+AgNO3: 1.472 mol
+BaCl2: 1.441 mol
+Na2CO3: 3.774 mol
+Ca(OH)2: 4.724 mol
+HCl: 5.486 mol
+AlCl3: 1.875 mol
+MgSO4: 20.000 mol
+NaOH: 3.750 mol
+NaHCO3: 5.357 mol
+CaCl2: 2.523 mol
+KNO3: 2.176 mol
+ZnSO4: 1.982 mol
+
+OPTIMIZATION RESULTS:
+Maximum Yield: 8.549 mol of NaCl
+Yield in grams: 499.61 g
+Total Time Used: 121.01 minutes
+Time Utilization: 60.5%
+Efficiency: 0.071 mol/min
+Processing Time: 1.41 ms
+Nodes Explored: 20
+
+OPTIMAL REACTION SEQUENCE (5 reactions):
+1. 3 NaOH + AlCl3 -> Al(OH)3 + 3 NaCl (extent: 1.25, time: 9.9 min)
+2. Na2CO3 + CaCl2 -> CaCO3 + 2 NaCl (extent: 2.52, time: 19.4 min)
+3. NaHCO3 + HCl -> NaCl + H2O + CO2 (extent: 5.36, time: 39.1 min)
+4. 2 NaCl + H2SO4 -> Na2SO4 + 2 HCl (extent: 5.10, time: 40.8 min)
+5. Na2SO4 + BaCl2 -> BaSO4 + 2 NaCl (extent: 1.44, time: 11.8 min)

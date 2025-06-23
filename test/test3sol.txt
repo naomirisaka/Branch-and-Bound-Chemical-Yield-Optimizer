@@ -1,0 +1,58 @@
+PROBLEM PARAMETERS:
+Target Product: H2O
+Time Limit: 400.00 minutes
+
+INITIAL CONDITIONS:
+Available Reactions: 34
+Initial Compounds:
+H2: 80.000 mol
+O2: 15.000 mol
+CH4: 2.493 mol
+C2H4: 1.248 mol
+C2H6: 1.497 mol
+C3H8: 1.247 mol
+C4H10: 1.118 mol
+C2H2: 1.152 mol
+C6H12O6: 1.110 mol
+C2H5OH: 1.085 mol
+CH3OH: 1.248 mol
+C: 2.081 mol
+CO: 1.607 mol
+CaCO3: 1.499 mol
+CaO: 1.427 mol
+Ca(OH)2: 1.215 mol
+Al: 2.224 mol
+CuSO4: 1.253 mol
+NaOH: 1.500 mol
+HCl: 2.194 mol
+Na2CO3: 1.132 mol
+H2SO4: 1.020 mol
+NH3: 1.468 mol
+NH4Cl: 1.309 mol
+Mg: 1.440 mol
+MgO: 1.241 mol
+Mg(OH)2: 1.286 mol
+Fe: 1.522 mol
+FeSO4: 1.185 mol
+Fe2O3: 0.751 mol
+CuO: 1.194 mol
+ZnO: 1.352 mol
+H2O2: 2.499 mol
+
+OPTIMIZATION RESULTS:
+Maximum Yield: 32.618 mol of H2O
+Yield in grams: 587.62 g
+Total Time Used: 381.65 minutes
+Time Utilization: 95.4%
+Efficiency: 0.085 mol/min
+Processing Time: 3.96 ms
+Nodes Explored: 31
+
+OPTIMAL REACTION SEQUENCE (7 reactions):
+1. H2O2 + H2 -> 2 H2O (extent: 2.50, time: 17.5 min)
+2. Mg(OH)2 + 2 HCl -> MgCl2 + 2 H2O (extent: 1.10, time: 12.1 min)
+3. NH4Cl + NaOH -> NH3 + NaCl + H2O (extent: 1.31, time: 11.8 min)
+4. C2H6 + 3.5 O2 -> 2 CO2 + 3 H2O (extent: 1.50, time: 46.4 min)
+5. CH3OH + 1.5 O2 -> CO2 + 2 H2O (extent: 1.25, time: 32.5 min)
+6. 2 H2 + O2 -> 2 H2O (extent: 7.89, time: 220.9 min)
+7. ZnO + H2 -> Zn + H2O (extent: 1.35, time: 40.6 min)
