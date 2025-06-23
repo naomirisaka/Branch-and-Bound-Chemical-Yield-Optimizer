@@ -1,4 +1,5 @@
 from typing import Dict, List, Tuple
+import time
 from reactions import Reaction, convert_to_moles, MOLAR_MASS
 from optimizer import branch_and_bound
 
@@ -71,14 +72,22 @@ def save_solution_to_file(filename: str, max_yield: float, selected_reactions: L
                 if 'compounds' in initial_data:
                     f.write("Initial Compounds:\n")
                     for compound, moles in initial_data['compounds'].items():
-                        f.write(f"  {compound}: {moles:.3f} mol\n")
+                        f.write(f"{compound}: {moles:.3f} mol\n")
                 f.write("\n")
             
             f.write("OPTIMIZATION RESULTS:\n")
             f.write(f"Maximum Yield: {max_yield:.3f} mol of {target_product}\n")
+            from reactions import calculate_molecular_mass
+            try:
+                molecular_mass = calculate_molecular_mass(target_product)
+                mass_yield = max_yield * molecular_mass
+                f.write(f"Yield in grams: {mass_yield:.2f} g\n")
+            except:
+                pass
             f.write(f"Total Time Used: {stats['total_time']:.2f} minutes\n")
             f.write(f"Time Utilization: {(stats['total_time']/max_time)*100:.1f}%\n")
             f.write(f"Efficiency: {stats['efficiency']:.3f} mol/min\n")
+            f.write(f"Processing Time: {stats['processing_time']:.2f} ms\n")
             f.write(f"Nodes Explored: {stats['nodes_explored']}\n\n")
             
             f.write(f"OPTIMAL REACTION SEQUENCE ({len(selected_reactions)} reactions):\n")
@@ -298,8 +307,12 @@ def print_results(max_yield: float, selected_reactions: List[str], stats: Dict,
     
     if max_yield > 0:
         print(f"Maximum Yield of {target_product}: {max_yield:.3f} mol")
+        if target_product in MOLAR_MASS:
+            mass_yield = max_yield * MOLAR_MASS[target_product]
+            print(f"Yield in grams: {mass_yield:.2f} g")
         print(f"Total Time Used: {stats['total_time']:.2f} / {max_time:.2f} minutes")
         print(f"Efficiency (mol/minute): {stats['efficiency']:.3f}")
+        print(f"Processing Time: {stats['processing_time']:.2f} ms")
         print(f"Nodes Explored: {stats['nodes_explored']}")
         
         print(f"\nOptimal Reactions Selected ({len(selected_reactions)}):")
@@ -308,10 +321,6 @@ def print_results(max_yield: float, selected_reactions: List[str], stats: Dict,
         
         time_util = (stats['total_time'] / max_time) * 100
         print(f"\nTime Utilization: {time_util:.1f}%")
-        
-        if target_product in MOLAR_MASS:
-            mass_yield = max_yield * MOLAR_MASS[target_product]
-            print(f"Yield in grams: {mass_yield:.2f} g")
         
     else:
         print("No feasible solution found within the given constraints.")
@@ -358,9 +367,14 @@ def main():
         max_time, target_product = input_constraints(reactions)
         initial_data = {'reactions': reactions, 'compounds': compound_moles}
     
+    start_time = time.perf_counter()
     max_yield, selected_reactions, stats = branch_and_bound(
         reactions, max_time, compound_moles, target_product
     )
+    end_time = time.perf_counter()
+    
+    processing_time = (end_time - start_time) * 1000
+    stats['processing_time'] = processing_time
     
     print_results(max_yield, selected_reactions, stats, max_time, target_product)
     
