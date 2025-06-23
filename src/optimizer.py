@@ -2,10 +2,12 @@ import heapq
 from typing import Dict, List, Tuple
 from reactions import Reaction, Node
 
+# checks if a reaction can be applied given the available moles
 def can_apply(reaction: Reaction, available_moles: Dict[str, float]) -> bool:
     return all(reactant in available_moles and available_moles[reactant] >= coeff
                for reactant, coeff in reaction.reactants.items())
 
+# calculates the bound for a node in the branch and bound algorithm
 def calculate_bound(node: Node, reactions: List[Reaction], max_time: float, target_product: str) -> float:
     if node.total_time > max_time:
         return node.total_yield 
@@ -18,6 +20,7 @@ def calculate_bound(node: Node, reactions: List[Reaction], max_time: float, targ
         reaction = reactions[i]
         if can_apply(reaction, available_moles):
             extent = reaction.get_limiting_extent(available_moles)
+            # if extent is positive, calculate the yield and time
             if extent > 0:
                 actual_time = reaction.time * extent
                 projected_time = time + actual_time
@@ -25,7 +28,7 @@ def calculate_bound(node: Node, reactions: List[Reaction], max_time: float, targ
                     time = projected_time
                     potential_yield = reaction.calculate_yield(target_product, extent)
                     total_yield += potential_yield
-                    
+                    # update available moles
                     for reactant, coeff in reaction.reactants.items():
                         available_moles[reactant] -= coeff * extent
                     for product, coeff in reaction.products.items():
@@ -33,31 +36,36 @@ def calculate_bound(node: Node, reactions: List[Reaction], max_time: float, targ
                             available_moles[product] += coeff * extent
                         else:
                             available_moles[product] = coeff * extent
-    
     return total_yield
 
+# branch and bound algorithm to find the optimal set of reactions
 def branch_and_bound(reactions: List[Reaction], max_time: float, 
                     initial_moles: Dict[str, float], target_product: str) -> Tuple[float, List[str], Dict]:
+
+    # no reactions provided
     if not reactions:
         return 0, [], {}
     
+    # sort reactions by efficiency (yield per time unit)
     def efficiency(r):
         max_extent = r.get_limiting_extent(initial_moles)
         potential_yield = r.calculate_yield(target_product, max_extent)
         actual_time = r.time * max_extent
         return potential_yield / actual_time if actual_time > 0 else 0
-    
+
     reactions.sort(key=efficiency, reverse=True)
 
+    # priority queue for nodes with the highest bound first
     queue = []
     root = Node(-1, 0, 0, initial_moles, 0, [])
     root.bound = calculate_bound(root, reactions, max_time, target_product)
     heapq.heappush(queue, root)
-
+    
     max_yield = 0
     best_combination = []
     nodes_explored = 0
 
+    # start branch and bound
     while queue:
         node = heapq.heappop(queue)
         nodes_explored += 1
@@ -113,6 +121,7 @@ def branch_and_bound(reactions: List[Reaction], max_time: float,
     total_time = 0
     current_moles = initial_moles.copy()
     
+    # reconstruct the best combination of reactions
     for i, taken in enumerate(best_combination):
         if taken and i < len(reactions):
             reaction = reactions[i]

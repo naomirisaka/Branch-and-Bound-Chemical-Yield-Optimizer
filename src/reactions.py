@@ -23,6 +23,7 @@ ATOMIC_MASS = {
 
 MOLAR_MASS = {}
 
+# parses a chemical formula
 def parse_chemical_formula(formula: str) -> Dict[str, int]:
     formula = expand_parentheses(formula)
     pattern = r'([A-Z][a-z]?)(\d*)'
@@ -35,6 +36,7 @@ def parse_chemical_formula(formula: str) -> Dict[str, int]:
     
     return element_counts
 
+# handles nested parentheses in chemical formulas
 def expand_parentheses(formula: str) -> str:
     while '(' in formula:
         depth = 0
@@ -69,12 +71,14 @@ def expand_parentheses(formula: str) -> str:
     
     return formula
 
+
 class Reaction:    
     def __init__(self, equation: str, time: float):
         self.equation = equation.strip()
         self.time = time  
         self.reactants, self.products = self.parse_equation(equation)
 
+    # parse the equation into reactants and products
     def parse_equation(self, eq: str) -> Tuple[Dict[str, float], Dict[str, float]]:
         try:
             if '->' not in eq:
@@ -109,6 +113,7 @@ class Reaction:
             print(f"Error parsing equation '{eq}': {e}")
             return {}, {}
 
+    # extract coefficient and compound from a term
     def extract_compound_with_coefficient(self, term: str) -> Tuple[float, str]:
         term = term.strip()
         if not term:
@@ -122,11 +127,13 @@ class Reaction:
         
         return 1.0, term
 
+    # calculate yield of a target product based on extent
     def calculate_yield(self, target_product: str, extent: float) -> float:
         if target_product in self.products:
             return self.products[target_product] * extent
         return 0.0
 
+    # check if the reaction can be applied with available moles
     def get_limiting_extent(self, available_moles: Dict[str, float]) -> float:
         if not self.reactants:
             return 0.0
@@ -141,9 +148,10 @@ class Reaction:
                 return 0.0
         
         return max_extent if max_extent != float('inf') else 0.0
-
+    
     def __str__(self):
         return f"{self.equation} | time={self.time} min"
+
 
 class Node:
     def __init__(self, level: int, total_yield: float, total_time: float, 
@@ -158,6 +166,7 @@ class Node:
     def __lt__(self, other):
         return self.bound > other.bound
 
+# calculates the molecular mass of a compound
 def calculate_molecular_mass(formula: str) -> float:
     if formula in MOLAR_MASS:
         return MOLAR_MASS[formula]
@@ -173,6 +182,7 @@ def calculate_molecular_mass(formula: str) -> float:
             else:
                 missing_elements.append(element)
         
+        # if there are unknown elements, prompt user for their atomic mass
         for element in missing_elements:
             print(f"Unknown element: {element}")
             while True:
@@ -201,9 +211,9 @@ def calculate_molecular_mass(formula: str) -> float:
             except ValueError:
                 print("Please enter a valid number.")
 
+# converts amount to moles based on the unit and compound
 def convert_to_moles(amount: float, unit: str, compound: str) -> float:
     unit = unit.lower().strip()
-    
     if unit in ['mol', 'moles']:
         return amount
     elif unit in ['g', 'gram', 'grams']:

@@ -8,6 +8,7 @@ def main():
     print("                     USING BRANCH AND BOUND ALGORITHM                     ")
     print("="*70)
     
+    # input method selection
     print("\nChoose input method:")
     print("1. CLI input")
     print("2. File input")
@@ -18,7 +19,9 @@ def main():
         print("Invalid choice. Please enter 1 or 2.")
         choice = input("\nEnter choice (1-2): ").strip()
     
+    # input from file
     if choice == "2":
+        # example input file generation
         example = input("\nDo you need an example input file? (y/n): ").strip().lower()
         while example not in ['y', 'n', 'yes', 'no']:
             print("Invalid choice. Please enter 'y' or 'n'.")
@@ -37,28 +40,32 @@ def main():
             reactions, compound_moles, max_time, target_product = load_from_file(filename)
         
         initial_data = {'reactions': reactions, 'compounds': compound_moles}
+
+    # input from CLI
     else:
         reactions = input_reactions()
         compound_moles = input_compounds(reactions)
         max_time, target_product = input_constraints(reactions)
         initial_data = {'reactions': reactions, 'compounds': compound_moles}
     
+    # branch and bound optimization
     start_time = time.perf_counter()
     max_yield, selected_reactions, stats = branch_and_bound(
         reactions, max_time, compound_moles, target_product
     )
     end_time = time.perf_counter()
-    
     processing_time = (end_time - start_time) * 1000
     stats['processing_time'] = processing_time
     
     print_results(max_yield, selected_reactions, stats, max_time, target_product)
     
+    # save results to file option
     save_choice = input("\nDo you want to save the solution to a file? (y/n): ").strip().lower()
     while save_choice not in ['y', 'n', 'yes', 'no']:
         print("Invalid choice. Please enter 'y' or 'n'.") 
         save_choice = input("\nDo you want to save the solution to a file? (y/n): ").strip().lower()
 
+    # save results to file
     if save_choice in ['y', 'yes']:
         output_filename = input("Enter output filename (e.g., solution.txt): ").strip()
         if output_filename == "" or output_filename == ".txt" or output_filename == ".":
